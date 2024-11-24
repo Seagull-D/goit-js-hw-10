@@ -1,5 +1,2 @@
-import"./assets/styles-DD3qoKza.js";const e=document.querySelector(".container"),t=`<h1 class="main-title">
-     TimerS
-        </h1>
-        `;e.insertAdjacentHTML("beforeend",t);
+import"./assets/styles-DD3qoKza.js";import{f as o}from"./assets/vendor-EyZmBGcZ.js";const e=document.querySelector("[data-start]");e.disabled=!0;console.log(e);let a="";o("#datetime-picker",{enableTime:!0,time_24hr:!0,defaultDate:new Date,minuteIncrement:1,onClose(t){t[0]>Date.now()?(e.disabled=!1,a=t[0]):window.alert("Please choose a date in the future"),console.log(a)}});
 //# sourceMappingURL=1-timer.js.map
