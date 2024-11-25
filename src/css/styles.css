@@ -16,3 +16,18 @@
 @import url('./badges.css');
 @import url('./back-link.css');
 @import url('./footer.css');
+
+/*--------------------TIMER---------------------------*/
+
+.timer{
+  display: flex;
+  gap: 5px;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.field{
+  display: flex;
+  flex-direction: column;
+    text-align: center;
+}
