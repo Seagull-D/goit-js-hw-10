@@ -1,4 +1,4 @@
-import"./assets/styles-DD3qoKza.js";const e=document.querySelector(".container"),t=`<h1 class="main-title">
+import"./assets/styles-CL-p8ArJ.js";const e=document.querySelector(".container"),t=`<h1 class="main-title">
           SnackBAR
         </h1>
         `;e.insertAdjacentHTML("beforeend",t);
