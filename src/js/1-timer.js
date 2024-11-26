@@ -1,98 +1,78 @@
-"use strict"
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 
-const startBtn = document.querySelector("[data-start]")
+const startBtn = document.querySelector("[data-start]");
 startBtn.disabled = true;
-console.log(startBtn)
-let userSelectedDate = {};
-let currentSecond ;
-let currentMinutes;
-let currentHours;
-let currentDays;
+
+let userSelectedDate = null;
 
 flatpickr("#datetime-picker", {
-enableTime: true,
-time_24hr: true,
-defaultDate: new Date(),
-minuteIncrement: 1,
-        onClose(selectedDates) {
-                   
-                if (selectedDates[0] > Date.now()) {
-                       
-                        startBtn.disabled = false;
-                        userSelectedDate.userDay = selectedDates[0].getDay();
-                        userSelectedDate.userHours = selectedDates[0].getHours();
-                        userSelectedDate.userMinutes = selectedDates[0].getMinutes();
-                        userSelectedDate.userSeconds = selectedDates[0].getSeconds();
-                } else {
-                    
-                        window.alert("Please choose a date in the future")
-                      
-                }
-                
+    enableTime: true,
+    time_24hr: true,
+    defaultDate: new Date(),
+    minuteIncrement: 1,
+    onClose(selectedDates) {
 
+        if (selectedDates[0] > Date.now()) {
+            startBtn.disabled = false;
+            userSelectedDate = selectedDates[0];
+        } else {
+            window.alert("Please choose a date in the future");
         }
+    }
 });
 
 class Timer {
-        constructor({ onTik }) {
-                this.onTik = onTik,
-                
-        this.isActive = false
-        }
+    constructor({ onTik }) {
+        this.onTik = onTik;
+        this.isActive = false;
+        this.intervalId = null;
+    }
+
+    start() {
+        if (this.isActive || !userSelectedDate) return;
         
-        start() {
-                if (this.isActive) {
-                        return
-                }
-                const startTime = Date.now();
-                this.isActive = true;
-                setInterval(() => {
-                        const currentTime = Date.now();
-                        const delta = currentTime - startTime;
-                        const time = this.convertMs(delta);
-                        
-                        currentSecond = userSelectedDate.userSeconds - time.seconds;
-                        currentMinutes = userSelectedDate.userMinutes - time.minutes;
-                        currentHours = userSelectedDate.userHours - time.hours;
-                        currentDays = userSelectedDate.userDay - time.days;
-                        if (currentSecond < 0) {
-                                currentSecond += 60;
-                        }
-                        console.log(currentDays, currentHours, currentMinutes, currentSecond)
-                        
-                }, 1000);
-        } 
-         convertMs(ms) {
-  // Number of milliseconds per unit of time
-  const second = 1000;
-  const minute = second * 60;
-  const hour = minute * 60;
-  const day = hour * 24;
+        this.isActive = true;
 
-  // Remaining days
-  const days = Math.floor(ms / day);
-  // Remaining hours
-  const hours = Math.floor((ms % day) / hour);
-  // Remaining minutes
-  const minutes = Math.floor(((ms % day) % hour) / minute);
-  // Remaining seconds
-  const seconds = Math.floor((((ms % day) % hour) % minute) / second);
+        this.intervalId = setInterval(() => {
+            const currentTime = Date.now();
+            const timeRemaining = userSelectedDate - currentTime; 
 
-  return { days, hours, minutes, seconds };
+            if (timeRemaining <= 0) {
+                clearInterval(this.intervalId); 
+                this.isActive = false;
+                this.onTik({ days: 0, hours: 0, minutes: 0, seconds: 0 });
+                return;
+            }
+
+            const time = this.convertMs(timeRemaining);
+            this.onTik(time); 
+
+        }, 1000);
+    }
+
+    convertMs(ms) {
+        const second = 1000;
+        const minute = second * 60;
+        const hour = minute * 60;
+        const day = hour * 24;
+
+        const days = Math.floor(ms / day);
+        const hours = Math.floor((ms % day) / hour);
+        const minutes = Math.floor(((ms % day) % hour) / minute);
+        const seconds = Math.floor((((ms % day) % hour) % minute) / second);
+
+        return { days, hours, minutes, seconds };
+    }
 }
 
-}
+const timer = new Timer({ onTik: updateTimerDisplay });
 
-const timer = new Timer({onTik:addTimerFace})
-        
+startBtn.addEventListener("click", timer.start.bind(timer));
 
-startBtn.addEventListener("click", timer.start.bind(timer))
-
-console.log(userSelectedDate)
-
-function addTimerFace(currentDays, currentHours, currentMinutes, currentSecond ) {
-       const seconds = document.querySelector("[data-seconds]") 
-        console.log(seconds)
+function updateTimerDisplay({ days, hours, minutes, seconds }) {
+        document.querySelector("[data-days]").textContent = String(days).padStart(3, "0");
+        document.querySelector("[data-hours]").textContent = String(hours).padStart(2, "0");
+        document.querySelector("[data-minutes]").textContent = String(minutes).padStart(2, "0");
+        document.querySelector("[data-seconds]").textContent = String(seconds).padStart(2, "0");
 }
