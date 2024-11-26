@@ -2,7 +2,12 @@ import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
 
 const startBtn = document.querySelector("[data-start]");
+const input = document.querySelector("#datetime-picker");
+console.dir(input)
 startBtn.disabled = true;
+input.disabled = false;
+
+
 
 let userSelectedDate = null;
 
@@ -33,7 +38,7 @@ class Timer {
         if (this.isActive || !userSelectedDate) return;
         
         this.isActive = true;
-
+            input.disabled = true;
         this.intervalId = setInterval(() => {
             const currentTime = Date.now();
             const timeRemaining = userSelectedDate - currentTime; 
@@ -71,7 +76,10 @@ const timer = new Timer({ onTik: updateTimerDisplay });
 startBtn.addEventListener("click", timer.start.bind(timer));
 
 function updateTimerDisplay({ days, hours, minutes, seconds }) {
-        document.querySelector("[data-days]").textContent = String(days).padStart(3, "0");
+        console.log(days)
+        if (String(days).length > 1) {
+              document.querySelector("[data-days]").textContent = String(days).padStart(3, "0");  
+        }else{document.querySelector("[data-days]").textContent = String(days).padStart(2, "0");}
         document.querySelector("[data-hours]").textContent = String(hours).padStart(2, "0");
         document.querySelector("[data-minutes]").textContent = String(minutes).padStart(2, "0");
         document.querySelector("[data-seconds]").textContent = String(seconds).padStart(2, "0");
