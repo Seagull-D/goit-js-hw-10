@@ -1,5 +1,2 @@
-import"./assets/styles-D_lBtN1v.js";const t=document.querySelector(".container"),e=`<h1 class="main-title">
-          SnackBAR
-        </h1>
-        `;t.insertAdjacentHTML("beforeend",e);document.querySelector("span[data-seconds]").textContent=`${currentSecond}`;document.querySelector("span[data-minutes]").textContent=`${currentMinutes}`;document.querySelector("span[data-hours]").textContent=`${currentHours}`;document.querySelector("span[data-days]").textContent=`${currentDays}`;
+import"./assets/styles-C0Fdil9z.js";import{i as c}from"./assets/vendor-BbbuE1sJ.js";const i=document.querySelector("form");i.addEventListener("submit",function(e){e.preventDefault()});const o=document.querySelector("input[name=delay]"),r=document.querySelector("button");console.log(r);console.log(o);function u(){return new Promise((e,n)=>{const s=document.querySelector('input[name="state"]:checked'),t=o.value;switch(o.value="",s.value){case"fulfilled":setTimeout(()=>{e(`✅ Fulfilled promise in ${t}ms`)},t);break;case"rejected":setTimeout(()=>{n(`❌ Rejected promise in ${t}ms`)},t);break;default:n("error");break}})}r.addEventListener("click",()=>{u().then(e=>c.show({message:`${e}`,position:"topRight",color:"green"})).catch(e=>c.show({message:`${e}`,position:"topRight",color:"red"}))});
 //# sourceMappingURL=2-snackbar.js.map
