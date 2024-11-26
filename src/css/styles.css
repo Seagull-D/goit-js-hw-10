@@ -18,16 +18,49 @@
 @import url('./footer.css');
 
 /*--------------------TIMER---------------------------*/
+.timerContainer{
+  display: block;
 
+
+margin-top: 30px;
+  
+}
 .timer{
   display: flex;
-  gap: 5px;
+  gap: 15px;
   text-align: center;
   margin-top: 20px;
+  justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+.timer-input{
+  min-width: 200px;
+  text-align: center;
+  display: block;
+  justify-content: center;
+    align-items: center;
+    margin: auto;
+}
+.timer-btn{
+  display: block;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .field{
   display: flex;
   flex-direction: column;
     text-align: center;
+}
+.value{
+font-size: 30px;
+}
+.label
+{
+  text-transform: uppercase;
+  font-size: 10px;
 }

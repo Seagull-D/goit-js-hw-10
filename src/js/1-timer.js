@@ -1,5 +1,7 @@
 import flatpickr from "flatpickr";
 import "flatpickr/dist/flatpickr.min.css";
+import iziToast from "izitoast";
+import "izitoast/dist/css/iziToast.min.css";
 
 const startBtn = document.querySelector("[data-start]");
 const input = document.querySelector("#datetime-picker");
@@ -22,7 +24,29 @@ flatpickr("#datetime-picker", {
             startBtn.disabled = false;
             userSelectedDate = selectedDates[0];
         } else {
-            window.alert("Please choose a date in the future");
+             
+                iziToast.show({
+    theme: 'light',
+    icon: 'icon-person',
+    title: 'Hey',
+    message: "Please choose a date in the future",
+    messageColor: 'red',
+    position: 'center', 
+    progressBarColor: 'rgb(0, 255, 184)',
+    buttons: [
+        
+        ['<button>OK</button>', function (instance, toast) {
+            instance.hide({
+                transitionOut: 'fadeOutUp',
+                onClosing: function(instance, toast, closedBy){
+                    console.info('closedBy: ' + closedBy); // 
+                }
+            }, toast, 'buttonName');
+        }]
+    ],
+    
+});
+
         }
     }
 });
