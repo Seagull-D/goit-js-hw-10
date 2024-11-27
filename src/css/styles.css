@@ -20,6 +20,12 @@
 .header {
   padding: 20px 0;
 }
+.task{
+  display: flex;
+  gap:  40PX;
+  align-items: center;
+  justify-content: center;
+}
 
 .nav {
   display: flex;
