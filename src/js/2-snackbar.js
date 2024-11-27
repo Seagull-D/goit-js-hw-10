@@ -45,16 +45,17 @@ function checkSelected() {
 
 
 button.addEventListener("click", () => {
- checkSelected()
+  checkSelected()
     .then((value) => iziToast.show({
       message: `${value}`,
       position: "topRight",
-      color:"green"
+      color: "green"
+    })
+    )
+    .catch((error) => iziToast.show({
+      message: `${error}`,
+      position: "topRight",
+      color: "red"
+    }))
 })
-  )
-.catch((error) => iziToast.show({
-  message: `${error}`,
-  position: "topRight",
-  color:"red"
-}))})
     
