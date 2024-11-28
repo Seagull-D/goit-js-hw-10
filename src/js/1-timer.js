@@ -70,6 +70,8 @@ class Timer {
             if (timeRemaining <= 0) {
                 clearInterval(this.intervalId); 
                 this.isActive = false;
+                input.disabled = false;
+
                 this.onTik({ days: 0, hours: 0, minutes: 0, seconds: 0 });
                 return;
             }
